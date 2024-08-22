@@ -84,7 +84,6 @@ def generate_device_file(device, file_list):
 
 def add_device():
     if not check_creds():
-        print(TRED + "You must have a valid config file to add a device.")
         return
     device = input(TYELLOW + "Please input device's codename : ")
     if device == "":
@@ -113,6 +112,8 @@ def add_device():
 
 
 def delete_device():
+    if not check_creds():
+        return
     device = input(TYELLOW + "Please input device's codename : ")
     if os.path.exists(config_devices + device + ".json"):
         print(TGREEN + "Device found. Deleting...")
@@ -191,28 +192,29 @@ def upload(devices):
 
 def upload_menu():
     if not check_creds():
-        print(TRED + "Be careful, you must have a valid config file to upload.")
-    devices_list = input("What devices do you want to upload (please separate with a comma. Ex: polaris,sargo,bonito). Type a for all. : ")
-    if devices_list == "a":
-        devices = (os.listdir(config_devices))
-        upload(devices)
+        return
     else:
-        devices = devices_list.split(",")
-        for device in devices:
-            if os.path.exists(config_devices + device + ".json"):
-                with open(config_devices + device + ".json") as f:
-                    data = json.load(f)
-                    files = data["files"]
-                    device_without_ext = os.path.splitext(device)[0]
-                    rom = retrieve_rom_name(device_without_ext)
-                    if rom is None:
-                        print(TRED + f"ROM file for device {device_without_ext} not found. Aborting...")
-                    else:
-                        upload_file(device_without_ext, rom)
-                    for file in files:
-                        upload_file(device_without_ext, file)
-            else:
-                print(TRED + f"Device {device} not found. Aborting...")
+        devices_list = input("What devices do you want to upload (please separate with a comma. Ex: polaris,sargo,bonito). Type a for all. : ")
+        if devices_list == "a":
+            devices = (os.listdir(config_devices))
+            upload(devices)
+        else:
+            devices = devices_list.split(",")
+            for device in devices:
+                if os.path.exists(config_devices + device + ".json"):
+                    with open(config_devices + device + ".json") as f:
+                        data = json.load(f)
+                        files = data["files"]
+                        device_without_ext = os.path.splitext(device)[0]
+                        rom = retrieve_rom_name(device_without_ext)
+                        if rom is None:
+                            print(TRED + f"ROM file for device {device_without_ext} not found. Aborting...")
+                        else:
+                            upload_file(device_without_ext, rom)
+                        for file in files:
+                            upload_file(device_without_ext, file)
+                else:
+                    print(TRED + f"Device {device} not found. Aborting...")
 
 
 def help():
