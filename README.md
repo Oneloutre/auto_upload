@@ -46,7 +46,7 @@ I maintain 5 devices, but 4 of them are part of Pixel 3 serie. When it comes to 
 ### :wrench: Installation
 
 ```bash
-pip3 install -r requirements.txt
+croot && git clone https://github.com/oneloutre/auto_upload.git && pip3 install -r requirements.txt
 ```
 
 ### :hammer: Usage
