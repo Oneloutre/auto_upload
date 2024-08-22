@@ -84,7 +84,8 @@ def generate_device_file(device, file_list):
 
 def add_device():
     if not check_creds():
-        print(TRED + "Be careful, you must have a valid config file to upload.")
+        print(TRED + "You must have a valid config file to add a device.")
+        return
     device = input(TYELLOW + "Please input device's codename : ")
     if device == "":
         print(TRED + "You must input a device codename.")
@@ -214,6 +215,16 @@ def upload_menu():
                 print(TRED + f"Device {device} not found. Aborting...")
 
 
+def help():
+    print("Available commands :")
+    print("---------------------")
+    print("  • i/init : Initialize the config folder and create a new config file.")
+    print("  • a/add : Add a new device to the upload list.")
+    print("  • u/upload : Upload the files for a device.")
+    print("  • d/delete : Delete a device from the upload list.")
+    print("  • h/help : Display this help message. ")
+    print("  • q/quit : Exit the script.")
+
 
 def main():
     arg = input(TRESET + "Please input a command (h for help) : ")
@@ -228,6 +239,9 @@ def main():
         main()
     elif arg == "delete" or arg == "d":
         delete_device()
+        main()
+    elif arg == "h" or arg == "help":
+        help()
         main()
     elif arg == "q" or arg == "quit":
         print(TGREEN + "Exiting...")
