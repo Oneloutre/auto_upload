@@ -14,7 +14,7 @@ sourceforge_host = "frs.sourceforge.net"
 config_folder = "upload_config"
 config_creds = "upload_config/credentials.json"
 config_devices = "upload_config/devices/"
-out = "out/target/product/"
+out = "../out/target/product/"
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -60,7 +60,7 @@ def init():
 
 
 def upload_rom_file(device):
-    rom_file = "out/target/product/" + device + "/EvolutionX*.zip"
+    rom_file = "../out/target/product/" + device + "/EvolutionX*.zip"
     if not os.path.exists(rom_file):
         print("ROM file not found. Exiting...")
         return
@@ -166,10 +166,10 @@ def upload_file(device, filename):
 
 def retrieve_rom_name(device):
     pattern_rom = r'^Evolution.*\.zip$'
-    if not os.path.exists(f"out/target/product/{device}"):
+    if not os.path.exists(f"../out/target/product/{device}"):
         print(TRED + f"Device {device} not found. Aborting...")
     else:
-        for dir in os.listdir(f"out/target/product/{device}"):
+        for dir in os.listdir(f"../out/target/product/{device}"):
             if re.match(pattern_rom, dir):
                 return dir
     return None
