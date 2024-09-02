@@ -158,7 +158,7 @@ def upload_file(device, filename):
                 print(TYELLOW + f"Sending {file_path} to {remote_path}... Please wait...")
                 scp.put(file_path, f"{remote_path}")
                 scp.close()
-                print(TGREEN + f"Upload successful ! file available at https://sourceforge.net/projects/projects/evolution-x/files/{device}/{android_version}/{filename_without_ext}/")
+                print(TGREEN + f"Upload successful ! file available at https://sourceforge.net/projects/evolution-x/files/{device}/{android_version}/{filename_without_ext}/")
 
         except Exception as e:
             print(TRED + f"Failed to upload {file_path}: {str(e)}")
